@@ -4,12 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import {
-  CalendarDays,
-  DollarSign,
-  FileText,
   LayoutDashboard,
-  Settings,
+  Building2,
   Users,
+  BarChart3,
+  LineChart,
+  TriangleAlert,
+  ClipboardCheck,
 } from "lucide-react";
 
 import {
@@ -31,19 +32,9 @@ const groups = [
     title: "Principal",
     items: [
       {
-        title: "Dashboard",
+        title: "Centro de Decisão",
         url: "/dashboard",
         icon: LayoutDashboard,
-      },
-      {
-        title: "Pacientes",
-        url: "/patients",
-        icon: Users,
-      },
-      {
-        title: "Agenda",
-        url: "/schedule",
-        icon: CalendarDays,
       },
     ],
   },
@@ -51,24 +42,44 @@ const groups = [
     title: "Gestão",
     items: [
       {
-        title: "Financeiro",
-        url: "/finance",
-        icon: DollarSign,
+        title: "Municípios Clientes",
+        url: "/municipios",
+        icon: Building2,
       },
       {
-        title: "Relatórios",
-        url: "/reports",
-        icon: FileText,
+        title: "Usuários",
+        url: "/usuarios",
+        icon: Users,
       },
     ],
   },
   {
-    title: "Sistema",
+    title: "Indicadores",
     items: [
       {
-        title: "Configurações",
-        url: "/settings",
-        icon: Settings,
+        title: "Indicadores Globais",
+        url: "/indicadores",
+        icon: BarChart3,
+      },
+      {
+        title: "Resultados dos Indicadores",
+        url: "/resultados",
+        icon: LineChart,
+      },
+    ],
+  },
+  {
+    title: "Operação",
+    items: [
+      {
+        title: "Alertas",
+        url: "/alertas",
+        icon: TriangleAlert,
+      },
+      {
+        title: "Missões",
+        url: "/missoes",
+        icon: ClipboardCheck,
       },
     ],
   },
