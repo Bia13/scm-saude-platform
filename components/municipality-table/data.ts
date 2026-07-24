@@ -1,0 +1,38 @@
+export const municipalities = [
+  {
+    id: 1,
+    name: "Campinas",
+    state: "SP",
+    population: "1.139.000",
+    users: 28,
+    lastAccess: "Hoje",
+    status: "online",
+  },
+  {
+    id: 2,
+    name: "Curitiba",
+    state: "PR",
+    population: "1.773.000",
+    users: 34,
+    lastAccess: "Ontem",
+    status: "online",
+  },
+  {
+    id: 3,
+    name: "Joinville",
+    state: "SC",
+    population: "616.000",
+    users: 12,
+    lastAccess: "2 dias",
+    status: "warning",
+  },
+  {
+    id: 4,
+    name: "Palmas",
+    state: "TO",
+    population: "313.000",
+    users: 6,
+    lastAccess: "7 dias",
+    status: "offline",
+  },
+];
