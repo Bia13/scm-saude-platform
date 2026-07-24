@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
-import { Mail, Lock, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { loginSchema, type LoginSchema } from "@/lib/validations/login";
@@ -46,6 +46,7 @@ export function LoginForm() {
   const supabase = createClient();
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -182,27 +183,42 @@ export function LoginForm() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
               <motion.div {...fadeUpDelay(0.1)} className="space-y-1.5">
-                <Label className="text-xs font-medium text-slate-500">
-                  Email
-                </Label>
+  <Label className="text-xs font-medium text-slate-500">
+    Email
+  </Label>
 
-                <div className="group relative">
-                  <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4.5 w-4.5 text-slate-300 transition-colors group-focus-within:text-slate-500" />
+  <div className="group relative">
+    <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4.5 w-4.5 text-slate-300 transition-colors group-focus-within:text-slate-500" />
 
-                  <Input
-                    type="email"
-                    placeholder="seu@email.com"
-                    autoComplete="email"
-                    inputMode="email"
-                    className="h-11 rounded-xl border-slate-200/80 bg-white pl-11 text-sm shadow-sm transition-shadow placeholder:text-slate-300 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-400/20 focus-visible:ring-blue-400/20"
-                    {...register("email")}
-                  />
-                </div>
+    <Input
+      type="email"
+      placeholder="voce@empresa.com"
+      autoComplete="email"
+      className="
+        h-11
+        rounded-xl
+        border-slate-200/80
+        bg-white
+        pl-11
+        text-sm
+        shadow-sm
+        transition-shadow
+        placeholder:text-slate-300
+        focus:border-blue-400/60
+        focus:ring-2
+        focus:ring-blue-400/20
+        focus-visible:ring-blue-400/20
+      "
+      {...register("email")}
+    />
+  </div>
 
-                {errors.email && (
-                  <p className="text-xs text-red-500">{errors.email.message}</p>
-                )}
-              </motion.div>
+  {errors.email && (
+    <p className="text-xs text-red-500">
+      {errors.email.message}
+    </p>
+  )}
+</motion.div>
 
               <motion.div {...fadeUpDelay(0.16)} className="space-y-1.5">
                 <div className="flex items-center justify-between">
@@ -219,16 +235,43 @@ export function LoginForm() {
                 </div>
 
                 <div className="group relative">
-                  <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4.5 w-4.5 text-slate-300 transition-colors group-focus-within:text-slate-500" />
+  <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4.5 w-4.5 text-slate-300 transition-colors group-focus-within:text-slate-500" />
 
-                  <Input
-                    type="password"
-                    placeholder="••••••••"
-                    autoComplete="current-password"
-                    className="h-11 rounded-xl border-slate-200/80 bg-white pl-11 text-sm shadow-sm transition-shadow placeholder:text-slate-300 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-400/20 focus-visible:ring-blue-400/20"
-                    {...register("password")}
-                  />
-                </div>
+  <Input
+    type={showPassword ? "text" : "password"}
+    placeholder="••••••••"
+    autoComplete="current-password"
+    className="
+      h-11
+      rounded-xl
+      border-slate-200/80
+      bg-white
+      pl-11
+      pr-11
+      text-sm
+      shadow-sm
+      transition-shadow
+      placeholder:text-slate-300
+      focus:border-blue-400/60
+      focus:ring-2
+      focus:ring-blue-400/20
+      focus-visible:ring-blue-400/20
+    "
+    {...register("password")}
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-700"
+  >
+    {showPassword ? (
+      <EyeOff className="h-4.5 w-4.5" />
+    ) : (
+      <Eye className="h-4.5 w-4.5" />
+    )}
+  </button>
+</div>
 
                 {errors.password && (
                   <p className="text-xs text-red-500">{errors.password.message}</p>
