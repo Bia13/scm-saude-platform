@@ -1,0 +1,175 @@
+"use client"
+
+
+import { ColumnDef } from "@tanstack/react-table"
+
+import { Badge } from "@/components/ui/badge"
+
+import { Button } from "@/components/ui/button"
+
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+
+import { MoreHorizontal } from "lucide-react"
+
+
+
+export type Usuario = {
+
+  id: string
+
+  nome: string | null
+
+  cargo: string | null
+
+  status: string | null
+
+  created_at: string
+
+
+}
+
+
+
+export const columns: ColumnDef<Usuario>[] = [
+
+
+  {
+    accessorKey: "nome",
+
+    header: "Usuário",
+
+  },
+
+
+
+  {
+    accessorKey: "cargo",
+
+    header: "Cargo",
+
+  },
+
+
+  {
+
+    accessorKey: "status",
+
+    header: "Status",
+
+
+    cell: ({ row }) => (
+
+      <Badge
+
+        variant={
+          row.original.status === "Ativo"
+            ? "default"
+            : "secondary"
+        }
+
+      >
+
+        {row.original.status}
+
+      </Badge>
+
+    ),
+
+  },
+
+
+
+  {
+
+    accessorKey: "created_at",
+
+    header: "Criado em",
+
+
+    cell: ({ row }) => {
+
+
+      return new Date(
+        row.original.created_at
+      ).toLocaleDateString("pt-BR")
+
+
+    }
+
+  },
+
+
+
+  {
+
+
+    id: "actions",
+
+
+    cell: () => (
+
+      <DropdownMenu>
+
+
+        <DropdownMenuTrigger asChild>
+
+
+          <Button
+            variant="ghost"
+            size="icon"
+          >
+
+            <MoreHorizontal
+              className="h-4 w-4"
+            />
+
+
+          </Button>
+
+
+        </DropdownMenuTrigger>
+
+
+
+        <DropdownMenuContent align="end">
+
+
+          <DropdownMenuItem>
+
+            Visualizar
+
+          </DropdownMenuItem>
+
+
+          <DropdownMenuItem>
+
+            Editar
+
+          </DropdownMenuItem>
+
+
+          <DropdownMenuItem>
+
+            Desativar usuário
+
+          </DropdownMenuItem>
+
+
+        </DropdownMenuContent>
+
+
+      </DropdownMenu>
+
+    )
+
+  }
+
+
+]
