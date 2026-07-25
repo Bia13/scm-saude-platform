@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { StatCard } from "@/components/dashboard/stat-card";
 
 export default function DashboardPage() {
   return (
@@ -15,81 +16,32 @@ export default function DashboardPage() {
           Bom dia, Administrador 👋
         </h2>
 
-        <p className="mt-1 text-muted-foreground">
+        <p className="mt-1 mb-4 text-muted-foreground">
           Bem-vindo novamente ao SCM Saúde Platform.
         </p>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground">Pacientes</p>
-              <h3 className="mt-2 text-3xl font-bold">1.528</h3>
-              <span className="text-xs text-emerald-600">
-                +12 este mês
-              </span>
-            </div>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
+        <StatCard
+  title="Consultas Hoje"
+  value="37"
+  subtitle="+5%"
+  icon={CalendarDays}
+/>
 
-            <Users className="size-8 text-muted-foreground" />
-          </CardContent>
-        </Card>
+<StatCard
+  title="Receita Mensal"
+  value="R$ 18.450"
+  subtitle="+8%"
+  icon={DollarSign}
+/>
 
-        <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Consultas Hoje
-              </p>
-
-              <h3 className="mt-2 text-3xl font-bold">37</h3>
-
-              <span className="text-xs text-emerald-600">
-                +5%
-              </span>
-            </div>
-
-            <CalendarDays className="size-8 text-muted-foreground" />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Receita Mensal
-              </p>
-
-              <h3 className="mt-2 text-3xl font-bold">
-                R$ 18.450
-              </h3>
-
-              <span className="text-xs text-emerald-600">
-                +8%
-              </span>
-            </div>
-
-            <DollarSign className="size-8 text-muted-foreground" />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Ocupação
-              </p>
-
-              <h3 className="mt-2 text-3xl font-bold">84%</h3>
-
-              <span className="text-xs text-emerald-600">
-                Excelente
-              </span>
-            </div>
-
-            <Activity className="size-8 text-muted-foreground" />
-          </CardContent>
-        </Card>
+<StatCard
+  title="Ocupação"
+  value="84%"
+  subtitle="Excelente"
+  icon={Activity}
+/>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-3">
