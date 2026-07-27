@@ -2,7 +2,7 @@ import {
   Activity,
   CalendarDays,
   DollarSign,
-  Users,
+  AlertTriangle,
 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -41,6 +41,12 @@ export default function DashboardPage() {
   value="84%"
   subtitle="Excelente"
   icon={Activity}
+/>
+<StatCard
+  title="Alertas Pendentes"
+  value="12"
+  subtitle="3 críticos"
+  icon={AlertTriangle}
 />
       </section>
 

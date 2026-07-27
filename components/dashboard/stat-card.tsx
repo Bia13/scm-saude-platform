@@ -27,12 +27,12 @@ export function StatCard({
             {value}
           </h3>
 
-          <span className="text-xs text-emerald-600">
+          <span className="mt-2 text-xs text-muted-foreground">
             {subtitle}
           </span>
         </div>
 
-        <Icon className="size-8 text-muted-foreground" />
+        <Icon className="size-8" />
       </CardContent>
     </Card>
   );

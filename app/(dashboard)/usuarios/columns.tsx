@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, ArrowUpDown } from "lucide-react"
 
 
 
@@ -41,13 +41,20 @@ export const columns: ColumnDef<Usuario>[] = [
 
 
   {
-    accessorKey: "nome",
+  accessorKey: "nome",
 
-    header: "Usuário",
-
-  },
-
-
+  header: ({ column }) => (
+    <Button
+      variant="ghost"
+      onClick={() =>
+        column.toggleSorting(column.getIsSorted() === "asc")
+      }
+    >
+      Usuário
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
+  ),
+},
 
   {
     accessorKey: "cargo",
@@ -58,12 +65,8 @@ export const columns: ColumnDef<Usuario>[] = [
 
 
   {
-
     accessorKey: "status",
-
     header: "Status",
-
-
     cell: ({ row }) => (
 
       <Badge
@@ -73,37 +76,33 @@ export const columns: ColumnDef<Usuario>[] = [
             ? "default"
             : "secondary"
         }
-
       >
-
         {row.original.status}
-
       </Badge>
-
     ),
 
   },
 
 
 
-  {
+ {
+  accessorKey: "created_at",
 
-    accessorKey: "created_at",
+  header: ({ column }) => (
+    <Button
+      variant="ghost"
+      onClick={() =>
+        column.toggleSorting(column.getIsSorted() === "asc")
+      }
+    >
+      Criado em
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
+  ),
 
-    header: "Criado em",
-
-
-    cell: ({ row }) => {
-
-
-      return new Date(
-        row.original.created_at
-      ).toLocaleDateString("pt-BR")
-
-
-    }
-
-  },
+  cell: ({ row }) =>
+    new Date(row.original.created_at).toLocaleDateString("pt-BR"),
+},
 
 
 
