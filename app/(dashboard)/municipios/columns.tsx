@@ -12,6 +12,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 
@@ -129,43 +130,30 @@ export const columns: ColumnDef<Municipio>[] = [
   {
 
     id: "actions",
+    header: "Ações",
 
     cell: ({ row }) => (
 
       <DropdownMenu>
-
-
         <DropdownMenuTrigger asChild>
-
           <Button
             variant="ghost"
             size="icon"
           >
-
             <MoreHorizontal className="h-4 w-4"/>
-
           </Button>
-
         </DropdownMenuTrigger>
-
-
-
         <DropdownMenuContent align="end">
-
-
           <DropdownMenuItem>
             <EyeIcon />
             Visualizar
           </DropdownMenuItem>
-
-
           <DropdownMenuItem>
           <PencilIcon />
             Editar
           </DropdownMenuItem>
-
-
-          <DropdownMenuItem>
+                  <DropdownMenuSeparator />
+          <DropdownMenuItem className="text-red-600 focus:text-red-600">
           <TrashIcon />
             Excluir
           </DropdownMenuItem>

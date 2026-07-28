@@ -13,10 +13,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 
 
-import { MoreHorizontal, ArrowUpDown } from "lucide-react"
+import { MoreHorizontal, ArrowUpDown, EyeIcon, PencilIcon, TrashIcon  } from "lucide-react"
 
 
 
@@ -110,60 +111,37 @@ export const columns: ColumnDef<Usuario>[] = [
 
 
     id: "actions",
-
+    header: "Ações",
 
     cell: () => (
-
       <DropdownMenu>
-
-
         <DropdownMenuTrigger asChild>
-
-
           <Button
             variant="ghost"
             size="icon"
           >
-
             <MoreHorizontal
               className="h-4 w-4"
             />
-
-
           </Button>
-
-
         </DropdownMenuTrigger>
-
-
-
         <DropdownMenuContent align="end">
-
-
           <DropdownMenuItem>
-
+            <EyeIcon/>
             Visualizar
-
           </DropdownMenuItem>
-
-
           <DropdownMenuItem>
-
+            <PencilIcon/>
             Editar
-
           </DropdownMenuItem>
+                  <DropdownMenuSeparator />
 
-
-          <DropdownMenuItem>
-
+          <DropdownMenuItem   className="text-red-600 focus:text-red-600"
+>
+            <TrashIcon/>
             Desativar usuário
-
           </DropdownMenuItem>
-
-
         </DropdownMenuContent>
-
-
       </DropdownMenu>
 
     )
