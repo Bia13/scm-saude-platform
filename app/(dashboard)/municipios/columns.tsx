@@ -165,7 +165,7 @@ export const columns: ColumnDef<Municipio>[] = [
           </DropdownMenuItem>
 
 
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem>
           <TrashIcon />
             Excluir
           </DropdownMenuItem>
