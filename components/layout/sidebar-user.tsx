@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   ChevronsUpDown,
   LogOut,
@@ -7,6 +10,8 @@ import {
   Shield,
   User,
 } from "lucide-react";
+
+import { createClient } from "@/lib/supabase/client";
 
 import {
   SidebarFooter,
@@ -28,79 +33,134 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+type UserProfile = {
+  nome: string | null;
+  email: string;
+};
+
 export function SidebarUser() {
+  const router = useRouter();
+
+  const supabase = useMemo(() => createClient(), []);
+
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+
+  useEffect(() => {
+    async function loadUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) return;
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("nome")
+        .eq("id", user.id)
+        .single();
+
+      setProfile({
+        nome: data?.nome ?? null,
+        email: user.email ?? "",
+      });
+    }
+
+    loadUser();
+  }, [supabase]);
+
+  async function handleLogout() {
+  setLogoutOpen(false);
+
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  await supabase.auth.signOut();
+
+  router.replace("/login");
+}
+
   return (
-    <SidebarFooter className="border-t">
+    <>
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="rounded-xl"
+                >
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback>
+                      {profile?.nome
+                        ?.split(" ")
+                        .map((nome) => nome[0])
+                        .join("")
+                        .slice(0, 2)
+                        .toUpperCase() ?? "AD"}
+                    </AvatarFallback>
+                  </Avatar>
 
-      <SidebarMenu>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">
+                      {profile?.nome ?? "Administrador"}
+                    </span>
 
-        <SidebarMenuItem>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {profile?.email ?? ""}
+                    </span>
+                  </div>
 
-          <DropdownMenu>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
 
-            <DropdownMenuTrigger asChild>
-
-              <SidebarMenuButton
-                size="lg"
-                className="rounded-xl"
+              <DropdownMenuContent
+                side="top"
+                align="end"
+                className="w-64 rounded-xl"
               >
-                <Avatar className="h-9 w-9">
-                  <AvatarFallback>
-                    AD
-                  </AvatarFallback>
-                </Avatar>
+                <DropdownMenuItem>
+                  <User className="mr-2 size-4" />
+                  Meu Perfil
+                </DropdownMenuItem>
 
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    Administrador
-                  </span>
+                <DropdownMenuItem>
+                  <Shield className="mr-2 size-4" />
+                  Minha Conta
+                </DropdownMenuItem>
 
-                  <span className="truncate text-xs text-muted-foreground">
-                    admin@scmsaude.com
-                  </span>
-                </div>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 size-4" />
+                  Configurações
+                </DropdownMenuItem>
 
-                <ChevronsUpDown className="ml-auto size-4" />
-              </SidebarMenuButton>
+                <DropdownMenuSeparator />
 
-            </DropdownMenuTrigger>
+                <DropdownMenuItem
+                  className="text-red-600 focus:text-red-600"
+                  onClick={() => setLogoutOpen(true)}
+                >
+                  <LogOut className="mr-2 size-4" />
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
 
-            <DropdownMenuContent
-              side="top"
-              align="end"
-              className="w-64 rounded-xl"
-            >
-
-              <DropdownMenuItem>
-                <User className="mr-2 size-4" />
-                Meu Perfil
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <Shield className="mr-2 size-4" />
-                Minha Conta
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <Settings className="mr-2 size-4" />
-                Configurações
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem className="text-red-600 focus:text-red-600">
-                <LogOut className="mr-2 size-4" />
-                Sair
-              </DropdownMenuItem>
-
-            </DropdownMenuContent>
-
-          </DropdownMenu>
-
-        </SidebarMenuItem>
-
-      </SidebarMenu>
-
-    </SidebarFooter>
+    </>
   );
 }
