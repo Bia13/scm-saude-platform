@@ -11,6 +11,7 @@ import {
   Clock,
   CheckCircle2,
   ListTodo,
+  Plus
 } from "lucide-react";
 
 
@@ -20,6 +21,7 @@ import { createClient } from "@/lib/supabase/server";
 
 
 import { columns } from "./columns";
+import { Button } from "@/components/ui/button";
 
 
 export default async function MissoesPage() {
@@ -27,8 +29,6 @@ export default async function MissoesPage() {
 
   const supabase =
     await createClient();
-
-
 
   const {
     data: missoes,
@@ -45,40 +45,21 @@ export default async function MissoesPage() {
       }
     );
 
-
-
-
-
   const listaMissoes =
     missoes ?? [];
 
-
-
-
-
   const total =
     listaMissoes.length;
-
-
-
-
   const pendentes =
     listaMissoes.filter(
       (item)=>
         item.status === "Pendente"
     ).length;
-
-
-
-
   const andamento =
     listaMissoes.filter(
       (item)=>
         item.status === "Em andamento"
     ).length;
-
-
-
 
   const concluidas =
     listaMissoes.filter(
@@ -140,30 +121,25 @@ export default async function MissoesPage() {
 
     <div className="space-y-6">
 
-
-
-
-
       {/* HEADER */}
 
-
       <div>
+        <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Missões
+          </h1>
 
-
-        <h1 className="text-3xl font-bold tracking-tight">
-
-          Missões
-
-        </h1>
-
-
-
-        <p className="text-muted-foreground">
-
+          <p className="text-muted-foreground">
           Acompanhe as missões estratégicas e atividades pendentes da plataforma.
+          </p>
+        </div>
 
-        </p>
-
+        <Button className="h-11 rounded-xl px-5">
+          <Plus className="mr-2 h-4 w-4" />
+          Nova Missão
+        </Button>
+      </div>
 
       </div>
 
