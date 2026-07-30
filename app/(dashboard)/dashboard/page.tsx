@@ -5,53 +5,101 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { StatCard } from "@/components/dashboard/stat-card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function DashboardPage() {
-  return (
-    <>
-      <section>
-        <h2 className="text-3xl font-bold tracking-tight">
-          Bom dia, Administrador 👋
-        </h2>
+  const cards = [
+    {
+      title: "Consultas Hoje",
+      value: "37",
+      icon: CalendarDays,
+    },
+    {
+      title: "Receita Mensal",
+      value: "R$ 18.450",
+      icon: DollarSign,
+    },
+    {
+      title: "Ocupação",
+      value: "84%",
+      icon: Activity,
+    },
+    {
+      title: "Alertas Pendentes",
+      value: "12",
+      icon: AlertTriangle,
+    },
+  ];
 
-        <p className="mt-1 mb-4 text-muted-foreground">
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Bom dia, Administrador 👋
+        </h1>
+
+        <p className="text-muted-foreground">
           Bem-vindo novamente ao SCM Saúde Platform.
         </p>
-      </section>
+      </div>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
-        <StatCard
-  title="Consultas Hoje"
-  value="37"
-  subtitle="+5%"
-  icon={CalendarDays}
-/>
+      {/* Cards */}
 
-<StatCard
-  title="Receita Mensal"
-  value="R$ 18.450"
-  subtitle="+8%"
-  icon={DollarSign}
-/>
+      <div
+        className="
+          grid
+          gap-4
+          md:grid-cols-2
+          lg:grid-cols-4
+        "
+      >
+        {cards.map((card) => {
+          const Icon = card.icon;
 
-<StatCard
-  title="Ocupação"
-  value="84%"
-  subtitle="Excelente"
-  icon={Activity}
-/>
-<StatCard
-  title="Alertas Pendentes"
-  value="12"
-  subtitle="3 críticos"
-  icon={AlertTriangle}
-/>
-      </section>
+          return (
+            <Card
+              key={card.title}
+              className="rounded-2xl"
+            >
+              <CardHeader
+                className="
+                  flex
+                  flex-row
+                  items-center
+                  justify-between
+                  pb-2
+                "
+              >
+                <CardTitle className="text-sm font-medium">
+                  {card.title}
+                </CardTitle>
 
-      <section className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+                <Icon className="size-5 text-muted-foreground" />
+              </CardHeader>
+
+              <CardContent>
+                <div className="text-3xl font-bold">
+                  {card.value}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Conteúdo */}
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Agenda */}
+
+        <Card className="rounded-2xl lg:col-span-2">
           <CardContent className="p-6">
             <h3 className="mb-5 text-lg font-semibold">
               Agenda de Hoje
@@ -69,88 +117,94 @@ export default function DashboardPage() {
                   className="flex items-center justify-between rounded-xl border bg-background p-4"
                 >
                   <div>
-                    <p className="font-medium">{nome}</p>
+                    <p className="font-medium">
+                      {nome}
+                    </p>
 
                     <p className="text-sm text-muted-foreground">
                       Consulta de rotina
                     </p>
                   </div>
 
-                  <span className="font-semibold">{hora}</span>
+                  <span className="font-semibold">
+                    {hora}
+                  </span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Atividades */}
+
+        <Card className="rounded-2xl">
           <CardContent className="p-6">
-  <h3 className="mb-5 text-lg font-semibold">
-    Atividades Recentes
-  </h3>
+            <h3 className="mb-5 text-lg font-semibold">
+              Atividades Recentes
+            </h3>
 
-  <div className="space-y-3">
+            <div className="space-y-3">
+              {[
+                {
+                  icon: "🟢",
+                  title: "Novo paciente cadastrado",
+                  description: "João Silva foi registrado",
+                  time: "Agora",
+                },
+                {
+                  icon: "📅",
+                  title: "Consulta confirmada",
+                  description: "Maria Souza • Cardiologia",
+                  time: "12 min",
+                },
+                {
+                  icon: "💰",
+                  title: "Receita atualizada",
+                  description: "Fechamento financeiro diário",
+                  time: "35 min",
+                },
+                {
+                  icon: "📄",
+                  title: "Relatório exportado",
+                  description: "Indicadores de desempenho",
+                  time: "1 h",
+                },
+                {
+                  icon: "⚙️",
+                  title: "Configuração alterada",
+                  description: "Preferências do sistema",
+                  time: "Ontem",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="flex items-start gap-4 rounded-xl border bg-background p-4 transition-all hover:shadow-sm"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-lg">
+                    {item.icon}
+                  </div>
 
-    {[
-      {
-        icon: "🟢",
-        title: "Novo paciente cadastrado",
-        description: "João Silva foi registrado",
-        time: "Agora",
-      },
-      {
-        icon: "📅",
-        title: "Consulta confirmada",
-        description: "Maria Souza • Cardiologia",
-        time: "12 min",
-      },
-      {
-        icon: "💰",
-        title: "Receita atualizada",
-        description: "Fechamento financeiro diário",
-        time: "35 min",
-      },
-      {
-        icon: "📄",
-        title: "Relatório exportado",
-        description: "Indicadores de desempenho",
-        time: "1 h",
-      },
-      {
-        icon: "⚙️",
-        title: "Configuração alterada",
-        description: "Preferências do sistema",
-        time: "Ontem",
-      },
-    ].map((item) => (
-      <div
-        key={item.title}
-        className="flex items-start gap-4 rounded-xl border bg-background p-4 transition-all hover:shadow-sm"
-      >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-lg">
-          {item.icon}
-        </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium">
+                        {item.title}
+                      </p>
 
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <p className="font-medium">{item.title}</p>
+                      <span className="text-xs text-muted-foreground">
+                        {item.time}
+                      </span>
+                    </div>
 
-            <span className="text-xs text-muted-foreground">
-              {item.time}
-            </span>
-          </div>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            {item.description}
-          </p>
-        </div>
-      </div>
-    ))}
-
-  </div>
-</CardContent>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
         </Card>
-      </section>
-    </>
+      </div>
+    </div>
   );
-}  
+}

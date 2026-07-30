@@ -1,5 +1,6 @@
 "use client";
-
+import { updateMissaoStatus } from "@/lib/supabase/missoes";
+import { useRouter } from "next/navigation";
 import {
   ColumnDef,
   flexRender,
@@ -40,7 +41,6 @@ import {
   useEffect,
   useState,
 } from "react";
-
 
 import { cn } from "@/lib/utils";
 
@@ -88,6 +88,7 @@ export function DataTable({
 }:DataTableProps){
 
 
+  const router = useRouter();
 
   const [
     tableData,
@@ -169,110 +170,43 @@ export function DataTable({
   /*
     Alternar concluída
   */
+async function toggleMissao(id: string) {
+  const missao = tableData.find((m) => m.id === id);
 
-  function toggleMissao(
-    id:string
-  ){
+  if (!missao) return;
 
+  const novoStatus =
+    missao.status === "Concluída"
+      ? "Pendente"
+      : "Concluída";
 
-    setTableData((prev)=>
+  await updateStatusMissao(id, novoStatus);
+}
 
-      prev.map((missao)=>{
+async function updateStatusMissao(
+  id: string,
+  status: MissaoStatus
+) {
+  try {
+    await updateMissaoStatus(id, status);
 
-
-        if(missao.id !== id)
-
-          return missao;
-
-
-
-        const concluida =
-          !missao.concluida;
-
-
-
-        return {
-
-          ...missao,
-
-          concluida,
-
-
-          status:
-
-            concluida
-
-            ? "Concluída"
-
-            : "Pendente"
-
-        };
-
-
-      })
-
+    setTableData((prev) =>
+      prev.map((missao) =>
+        missao.id === id
+          ? {
+              ...missao,
+              status,
+              concluida: status === "Concluída",
+            }
+          : missao
+      )
     );
 
-
+    router.refresh();
+  } catch (error) {
+    console.error(error);
   }
-
-
-
-
-
-
-
-
-
-
-  /*
-    Alterar status manualmente
-  */
-
-
-  function updateStatusMissao(
-
-    id:string,
-
-    status:MissaoStatus
-
-  ){
-
-
-    setTableData((prev)=>
-
-      prev.map((missao)=>{
-
-
-        if(missao.id !== id)
-
-          return missao;
-
-
-
-        return {
-
-
-          ...missao,
-
-
-          status,
-
-
-          concluida:
-            status === "Concluída"
-
-
-        };
-
-
-      })
-
-    );
-
-
-  }
-
+}
 
 
 

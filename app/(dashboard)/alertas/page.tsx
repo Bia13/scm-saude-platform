@@ -3,62 +3,109 @@ import {
   CheckCircle2,
   Clock3,
   Siren,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-import { StatCard } from "@/components/dashboard/stat-card"
-
-import { alertas } from "./data"
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
+import { alertas } from "./data";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export default function AlertasPage() {
+  const cards = [
+    {
+      title: "Alertas Ativos",
+      value: "18",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Críticos",
+      value: "4",
+      icon: Siren,
+    },
+    {
+      title: "Em andamento",
+      value: "9",
+      icon: Clock3,
+    },
+    {
+      title: "Resolvidos",
+      value: "52",
+      icon: CheckCircle2,
+    },
+  ];
+
   return (
-    <div className="space-y-8 p-8">
+    <div className="space-y-6">
+      {/* Header */}
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
           Alertas
         </h1>
 
-        <p className="mt-1 text-muted-foreground">
-          Monitore ocorrências críticas e acompanhe a resolução dos alertas do sistema.
+        <p className="text-muted-foreground">
+          Monitore ocorrências críticas e acompanhe a resolução dos alertas do
+          sistema.
         </p>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Alertas Ativos"
-          value="18"
-          subtitle="+3 hoje"
-          icon={AlertTriangle}
-        />
+      {/* Cards */}
 
-        <StatCard
-          title="Críticos"
-          value="4"
-          subtitle="Prioridade máxima"
-          icon={Siren}
-        />
+      <div
+        className="
+          grid
+          gap-4
+          md:grid-cols-2
+          lg:grid-cols-4
+        "
+      >
+        {cards.map((card) => {
+          const Icon = card.icon;
 
-        <StatCard
-          title="Em andamento"
-          value="9"
-          subtitle="50% dos alertas"
-          icon={Clock3}
-        />
+          return (
+            <Card
+              key={card.title}
+              className="rounded-2xl"
+            >
+              <CardHeader
+                className="
+                  flex
+                  flex-row
+                  items-center
+                  justify-between
+                  pb-2
+                "
+              >
+                <CardTitle className="text-sm font-medium">
+                  {card.title}
+                </CardTitle>
 
-        <StatCard
-          title="Resolvidos"
-          value="52"
-          subtitle="Este mês"
-          icon={CheckCircle2}
-        />
+                <Icon className="size-5 text-muted-foreground" />
+              </CardHeader>
+
+              <CardContent>
+                <div className="text-3xl font-bold">
+                  {card.value}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
+
+      {/* Tabela */}
 
       <Card className="rounded-2xl">
         <CardHeader>
-          <CardTitle>Lista de Alertas</CardTitle>
+          <CardTitle>
+            Lista de Alertas
+          </CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -69,5 +116,5 @@ export default function AlertasPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
