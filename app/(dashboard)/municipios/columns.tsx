@@ -104,27 +104,49 @@ export const columns: ColumnDef<Municipio>[] = [
 },
 
   {
-    accessorKey: "status",
+  accessorKey: "status",
 
-    header: "Status",
+  header: "Status",
 
-    cell: ({ row }) => (
+  cell: ({ row }) => {
+    const status = row.original.status;
 
+    const styles = {
+      Ativo:
+        "bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300",
+
+      Inativo:
+        "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300",
+
+      Implantação:
+        "bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300",
+    };
+
+    const dot = {
+      Ativo: "bg-green-500",
+
+      Inativo: "bg-red-500",
+
+      Implantação: "bg-yellow-500",
+    };
+
+    return (
       <Badge
-        variant={
-          row.original.status === "Ativo"
-            ? "default"
-            : "secondary"
-        }
+        variant="outline"
+        className={`
+          gap-2
+          rounded-full
+          px-3
+          py-1
+          font-medium
+          ${styles[status as keyof typeof styles] ?? ""}
+        `}
       >
-
-        {row.original.status}
-
+        {status}
       </Badge>
-
-    ),
-
+    );
   },
+},
 
 
   {

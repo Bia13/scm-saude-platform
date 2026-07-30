@@ -36,8 +36,6 @@ import {
   CalendarDays,
 } from "lucide-react";
 
-import { StatCard } from "@/components/dashboard/stat-card";
-
 import {
   Card,
   CardContent,
@@ -90,35 +88,78 @@ export default function IndicadoresPage() {
       </div>
 
       {/* Cards */}
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Consultas"
-          value="2.845"
-          subtitle="+12% este mês"
-          icon={CalendarDays}
-        />
+<div
+  className="
+    grid
+    gap-4
+    md:grid-cols-2
+    lg:grid-cols-4
+  "
+>
+  {[
+    {
+      title: "Consultas",
+      value: "2.845",
+      icon: CalendarDays,
+    },
+    {
+      title: "Municípios",
+      value: "18",
+      icon: Building2,
+    },
+    {
+      title: "Ocupação",
+      value: "84%",
+      icon: Activity,
+    },
+    {
+      title: "Alertas",
+      value: "12",
+      icon: AlertTriangle,
+    },
+  ].map((card) => {
+    const Icon = card.icon;
 
-        <StatCard
-          title="Municípios"
-          value="18"
-          subtitle="2 novos"
-          icon={Building2}
-        />
+    return (
+      <Card
+        key={card.title}
+        className="rounded-2xl"
+      >
+        <CardHeader
+          className="
+            flex
+            flex-row
+            items-center
+            justify-between
+            pb-2
+          "
+        >
+          <CardTitle
+            className="
+              text-sm
+              font-medium
+            "
+          >
+            {card.title}
+          </CardTitle>
 
-        <StatCard
-          title="Ocupação"
-          value="84%"
-          subtitle="Excelente"
-          icon={Activity}
-        />
+          <Icon
+            className="
+              size-5
+              text-muted-foreground
+            "
+          />
+        </CardHeader>
 
-        <StatCard
-          title="Alertas"
-          value="12"
-          subtitle="3 críticos"
-          icon={AlertTriangle}
-        />
-      </div>
+        <CardContent>
+          <div className="text-3xl font-bold">
+            {card.value}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  })}
+</div>
 
       {/* Charts */}
       <div className="grid gap-6 lg:grid-cols-2">

@@ -52,24 +52,40 @@ export const columns: ColumnDef<ResultadoIndicador>[] = [
     ),
     cell: ({ row }) => `${row.original.resultado}%`,
   },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status
+{
+  accessorKey: "status",
 
-      const variant =
-        status === "Excelente"
-          ? "default"
-          : status === "Atenção"
-          ? "secondary"
-          : "destructive"
+  header: "Status",
 
-      return (
-        <Badge variant={variant}>
-          {status}
-        </Badge>
-      )
-    },
+  cell: ({ row }) => {
+    const status = row.original.status;
+
+    const styles = {
+      Excelente:
+        "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
+
+      Atenção:
+        "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
+
+      Crítico:
+        "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
+    };
+
+    return (
+      <Badge
+        variant="outline"
+        className={`
+          rounded-full
+          px-3
+          py-1
+          gap-2
+          font-medium
+          ${styles[status as keyof typeof styles]}
+        `}
+      >
+        {status}
+      </Badge>
+    );
   },
+},
 ]

@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
 
           <SelectContent>
             <SelectItem value="todos">
-              Todos
+              Todos municípios
             </SelectItem>
 
             {municipios.map((municipio) => (
@@ -176,7 +176,7 @@ export function DataTable<TData, TValue>({
 
           <SelectContent>
             <SelectItem value="todos">
-              Todas
+              Todas áreas
             </SelectItem>
 
             {areas.map((area) => (
@@ -212,7 +212,7 @@ export function DataTable<TData, TValue>({
 
           <SelectContent>
             <SelectItem value="todos">
-              Todos
+              Todos status
             </SelectItem>
 
             {status.map((item) => (
