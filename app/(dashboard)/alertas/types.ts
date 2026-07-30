@@ -6,4 +6,4 @@ export type Alerta = {
   prioridade: "Crítica" | "Alta" | "Média" | "Baixa"
   status: "Pendente" | "Em andamento" | "Resolvido"
   data: string
-}+
+}
