@@ -1,6 +1,7 @@
 "use client";
 import { updateMissaoStatus } from "@/lib/supabase/missoes";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   ColumnDef,
   flexRender,
@@ -201,6 +202,10 @@ async function updateStatusMissao(
           : missao
       )
     );
+
+    if (status === "Concluída") {
+      toast.success("Missão concluída com sucesso!");
+    }
 
     router.refresh();
   } catch (error) {

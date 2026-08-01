@@ -67,11 +67,6 @@ export default async function MissoesPage() {
         item.status === "Concluída"
     ).length;
 
-
-
-
-
-
   const cards = [
     {
       title:"Total de Missões",
@@ -85,8 +80,6 @@ export default async function MissoesPage() {
       icon:Clock,
     },
 
-
-
     {
       title:"Em andamento",
 
@@ -96,8 +89,6 @@ export default async function MissoesPage() {
 
     },
 
-
-
     {
       title:"Concluídas",
 
@@ -106,23 +97,11 @@ export default async function MissoesPage() {
       icon:CheckCircle2,
 
     },
-
-
   ];
 
-
-
-
-
-
-
   return (
-
-
     <div className="space-y-6">
-
       {/* HEADER */}
-
       <div>
         <div className="flex items-center justify-between">
         <div>
@@ -140,56 +119,27 @@ export default async function MissoesPage() {
           Nova Missão
         </Button>
       </div>
-
       </div>
-
-
-
-
-
-
-
-
-
       {/* CARDS */}
-
-
       <div
-
         className="
           grid
           gap-4
           md:grid-cols-2
           lg:grid-cols-4
         "
-
       >
-
-
         {
           cards.map((card)=>{
-
-
             const Icon =
               card.icon;
 
-
-
             return (
-
-
               <Card
-
                 key={card.title}
-
                 className="rounded-2xl"
-
               >
-
-
-
                 <CardHeader
-
                   className="
                     flex
                     flex-row
@@ -197,156 +147,59 @@ export default async function MissoesPage() {
                     justify-between
                     pb-2
                   "
-
                 >
-
-
-
                   <CardTitle
-
                     className="
                       text-sm
                       font-medium
                     "
-
                   >
-
                     {card.title}
-
-
                   </CardTitle>
 
-
-
-
-
                   <Icon
-
                     className="
                       size-5
                       text-muted-foreground
                     "
-
                   />
-
-
-
                 </CardHeader>
-
-
-
-
-
-
-
                 <CardContent>
-
-
                   <div
-
                     className="
                       text-3xl
                       font-bold
                     "
-
                   >
-
                     {card.value}
-
-
                   </div>
-
-
-
                 </CardContent>
-
-
-
               </Card>
-
-
             );
-
-
           })
-
         }
-
-
 
       </div>
 
-
-
-
-
-
-
-
-
       {/* TABELA */}
-
-
-
       <Card
-
         className="rounded-2xl"
 
       >
-
-
-
         <CardHeader>
-
-
           <CardTitle>
-
             Lista de Missões
-
           </CardTitle>
-
-
-
         </CardHeader>
-
-
-
-
-
-
-
         <CardContent>
-
-
           <DataTable
-
-
             columns={columns}
-
-
             data={listaMissoes}
-
-
           />
-
-
-
         </CardContent>
-
-
-
-
       </Card>
 
-
-
-
-
-
-
     </div>
-
-
   );
 
 
