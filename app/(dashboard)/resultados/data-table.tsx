@@ -276,34 +276,55 @@ export function DataTable<TData, TValue>({
         </Table>
 
         {/* Paginação */}
-
-        <div className="flex items-center justify-between p-4">
-          <p className="text-sm text-muted-foreground">
-            Página{" "}
-            {table.getState().pagination.pageIndex + 1}{" "}
-            de {table.getPageCount()}
-          </p>
-
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Anterior
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Próximo
-            </Button>
-          </div>
-        </div>
+ 
+         <div className="flex flex-col gap-4 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+ 
+           <div className="text-sm text-muted-foreground">
+             Exibindo{" "}
+             {
+               table.getFilteredRowModel().rows
+                 .length
+             }{" "}
+             resultado(s)
+           </div>
+ 
+           <div className="flex items-center gap-4 self-end">
+ 
+             <span className="text-sm text-muted-foreground">
+               Página{" "}
+               {table.getState().pagination
+                 .pageIndex + 1}{" "}
+               de {table.getPageCount()}
+             </span>
+ 
+             <Button
+               variant="outline"
+               size="sm"
+               onClick={() =>
+                 table.previousPage()
+               }
+               disabled={
+                 !table.getCanPreviousPage()
+               }
+             >
+               Anterior
+             </Button>
+ 
+             <Button
+               variant="outline"
+               size="sm"
+               onClick={() =>
+                 table.nextPage()
+               }
+               disabled={
+                 !table.getCanNextPage()
+               }
+             >
+               Próxima
+             </Button>
+ 
+           </div>
+         </div>
       </div>
     </div>
   )

@@ -63,6 +63,15 @@ export function DataTable<TData, TValue>({
   const [statusFilter, setStatusFilter] =
     useState("todos");
 
+    const [municipioFilter, setMunicipioFilter] =
+    useState("todos");
+
+    const municipios = Array.from(
+      new Set(
+        data.map((alerta: any) => alerta.municipio)
+      )
+    );
+
   const categorias = Array.from(
     new Set(
       data.map((alerta: any) => alerta.categoria)
@@ -125,6 +134,52 @@ export function DataTable<TData, TValue>({
             className="pl-9"
           />
         </div>
+
+        
+        <Select
+          value={municipioFilter}
+          onValueChange={(value) => {
+            setMunicipioFilter(value);
+
+            setColumnFilters((prev) => {
+              const filters = prev.filter(
+                (filter) =>
+                  filter.id !== "municipio"
+              );
+
+              if (value === "todos") {
+                return filters;
+              }
+
+              return [
+                ...filters,
+                {
+                  id: "municipio",
+                  value,
+                },
+              ];
+            });
+          }}
+        >
+          <SelectTrigger className="w-full xl:w-[180px]">
+            <SelectValue placeholder="municipio" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="todos">
+              Todos municipios
+            </SelectItem>
+
+            {municipios.map((municipio) => (
+              <SelectItem
+                key={municipio}
+                value={municipio}
+              >
+                {municipio}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         {/* Categoria */}
 

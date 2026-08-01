@@ -905,93 +905,57 @@ Nenhuma missão encontrada.
 
 
 </Table>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
 {/* PAGINAÇÃO */}
+        <div className="flex flex-col gap-4 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
 
+          <div className="text-sm text-muted-foreground">
+            Exibindo{" "}
+            {
+              table.getFilteredRowModel().rows
+                .length
+            }{" "}
+            missão(ões)
+          </div>
 
+          <div className="flex items-center gap-4 self-end">
 
-<div
+            <span className="text-sm text-muted-foreground">
+              Página{" "}
+              {table.getState().pagination
+                .pageIndex + 1}{" "}
+              de {table.getPageCount()}
+            </span>
 
-className="
-flex
-items-center
-justify-end
-gap-4
-py-4
-"
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                table.previousPage()
+              }
+              disabled={
+                !table.getCanPreviousPage()
+              }
+            >
+              Anterior
+            </Button>
 
->
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                table.nextPage()
+              }
+              disabled={
+                !table.getCanNextPage()
+              }
+            >
+              Próxima
+            </Button>
 
-
-<div className="text-sm text-muted-foreground">
-
-Página{" "}
-
-{table.getState().pagination.pageIndex + 1}
-
-{" "}de{" "}
-
-{table.getPageCount()}
-
-
-</div>
-
-
-
-
-
-<Button
-
-variant="outline"
-
-size="sm"
-
-onClick={()=>table.previousPage()}
-
-disabled={!table.getCanPreviousPage()}
-
->
-
-Anterior
-
-</Button>
-
-
-
-
-
-<Button
-
-variant="outline"
-
-size="sm"
-
-onClick={()=>table.nextPage()}
-
-disabled={!table.getCanNextPage()}
-
->
-
-Próximo
-
-</Button>
-
-
+          </div>
+        </div>
 
 </div>
-
 
 
 

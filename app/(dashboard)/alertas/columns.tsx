@@ -129,6 +129,7 @@ export const columns: ColumnDef<Alerta>[] = [
 
   {
     id: "actions",
+    header:"Ações",
 
     cell: () => (
       <DropdownMenu>
