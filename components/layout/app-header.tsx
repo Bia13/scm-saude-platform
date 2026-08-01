@@ -67,10 +67,11 @@ export function AppHeader() {
   const supabase = useMemo(() => createClient(), []);
 
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
   const title = titles[pathname] ?? "Dashboard";
-const [notifications, setNotifications] = useState([
+  const [notifications, setNotifications] = useState([
   {
     id: 1,
     type: "calendar",
@@ -306,7 +307,7 @@ function markAllAsRead() {
 </DropdownMenuContent>
           </DropdownMenu>
 
-          <DropdownMenu>
+          <DropdownMenu open={userMenuOpen} onOpenChange={setUserMenuOpen}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
@@ -361,7 +362,10 @@ function markAllAsRead() {
                 className="text-red-600 focus:text-red-600"
                 onSelect={(event) => {
                   event.preventDefault();
-                  setLogoutOpen(true);
+                  setUserMenuOpen(false);
+                  requestAnimationFrame(() => {
+                    setLogoutOpen(true);
+                  });
                 }}
               >
                 <LogOut className="mr-2 h-4 w-4" />
@@ -371,6 +375,22 @@ function markAllAsRead() {
           </DropdownMenu>
         </div>
       </header>
+
+      <AlertDialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deseja sair da plataforma?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você será desconectado e precisará entrar novamente para continuar.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>Sair</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

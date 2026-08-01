@@ -56,6 +56,7 @@ export function SidebarUser() {
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   useEffect(() => {
     async function loadUser() {
@@ -95,7 +96,7 @@ export function SidebarUser() {
       <SidebarFooter className="border-t">
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu open={userMenuOpen} onOpenChange={setUserMenuOpen}>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
@@ -150,7 +151,13 @@ export function SidebarUser() {
 
                 <DropdownMenuItem
                   className="text-red-600 focus:text-red-600"
-                  onClick={() => setLogoutOpen(true)}
+                  onSelect={(event) => {
+                    event.preventDefault();
+                    setUserMenuOpen(false);
+                    requestAnimationFrame(() => {
+                      setLogoutOpen(true);
+                    });
+                  }}
                 >
                   <LogOut className="mr-2 size-4" />
                   Sair
@@ -161,6 +168,21 @@ export function SidebarUser() {
         </SidebarMenu>
       </SidebarFooter>
 
+      <AlertDialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deseja sair da plataforma?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você será desconectado e precisará entrar novamente para continuar.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>Sair</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
