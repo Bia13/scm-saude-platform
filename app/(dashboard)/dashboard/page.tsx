@@ -1,7 +1,8 @@
 import {
   Activity,
-  CalendarDays,
-  DollarSign,
+  Building2,
+  Clock,
+  Users,
   AlertTriangle,
 } from "lucide-react";
 
@@ -12,27 +13,83 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function DashboardPage() {
+import { getMunicipios } from "@/lib/supabase/municipios";
+import { getUsuarios } from "@/lib/supabase/users";
+import { getMissoes } from "@/lib/supabase/missoes";
+import { alertas } from "@/app/(dashboard)/alertas/data";
+
+export default async function DashboardPage() {
+  const [municipios, usuarios, missoes] = await Promise.all([
+    getMunicipios(),
+    getUsuarios(),
+    getMissoes(),
+  ]);
+
+  const totalMunicipios = municipios.length;
+  const totalUsuarios = usuarios.length;
+  const totalAlertasAbertos = alertas.filter(
+    (item) => item.status !== "Resolvido"
+  ).length;
+  const missoesAndamento = missoes.filter(
+    (item) => item.status === "Em andamento"
+  ).length;
+
   const cards = [
     {
-      title: "Consultas Hoje",
-      value: "37",
-      icon: CalendarDays,
+      title: "Municípios Clientes",
+      value: totalMunicipios,
+      icon: Building2,
     },
     {
-      title: "Receita Mensal",
-      value: "R$ 18.450",
-      icon: DollarSign,
+      title: "Usuários",
+      value: totalUsuarios,
+      icon: Users,
     },
     {
-      title: "Ocupação",
-      value: "84%",
-      icon: Activity,
-    },
-    {
-      title: "Alertas Pendentes",
-      value: "12",
+      title: "Alertas Abertos",
+      value: totalAlertasAbertos,
       icon: AlertTriangle,
+    },
+    {
+      title: "Missões em andamento",
+      value: missoesAndamento,
+      icon: Clock,
+    },
+  ];
+
+  const tasks = [
+    {
+      title: "Revisão de indicadores municipais",
+      description: "Verificar metas de vacinação e APS para o trimestre.",
+      status: "Em andamento",
+    },
+    {
+      title: "Atualizar plano de atuação",
+      description: "Concluir mapeamento de ações em 5 municípios prioritários.",
+      status: "Pendente",
+    },
+    {
+      title: "Monitorar alertas críticos",
+      description: "Acompanhar resoluções dos alertas mais urgentes.",
+      status: "Em andamento",
+    },
+  ];
+
+  const updates = [
+    {
+      title: "Estudo de cobertura vacinal",
+      description: "Aparecida de Goiânia está em atenção para campanha de rotina.",
+      time: "Agora",
+    },
+    {
+      title: "Município com meta APS revisada",
+      description: "Catalão tem nova recomendação de avaliação.",
+      time: "30 min",
+    },
+    {
+      title: "Relatório de indicadores gerado",
+      description: "Painel mensal disponível para gestores.",
+      time: "1 h",
     },
   ];
 
@@ -97,98 +154,58 @@ export default function DashboardPage() {
       {/* Conteúdo */}
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Agenda */}
+        {/* Prioridades de Gestão */}
 
         <Card className="rounded-2xl lg:col-span-2">
           <CardContent className="p-6">
             <h3 className="mb-5 text-lg font-semibold">
-              Agenda de Hoje
+              Prioridades de Gestão
             </h3>
 
             <div className="space-y-4">
-              {[
-                ["09:00", "João Silva"],
-                ["10:30", "Maria Souza"],
-                ["13:00", "Carlos Oliveira"],
-                ["15:45", "Fernanda Lima"],
-              ].map(([hora, nome]) => (
+              {tasks.map((task) => (
                 <div
-                  key={hora}
-                  className="flex items-center justify-between rounded-xl border bg-background p-4"
+                  key={task.title}
+                  className="rounded-xl border bg-background p-4"
                 >
-                  <div>
-                    <p className="font-medium">
-                      {nome}
-                    </p>
-
-                    <p className="text-sm text-muted-foreground">
-                      Consulta de rotina
-                    </p>
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="font-medium">{task.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {task.description}
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold">
+                      {task.status}
+                    </span>
                   </div>
-
-                  <span className="font-semibold">
-                    {hora}
-                  </span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Atividades */}
+        {/* Atualizações */}
 
         <Card className="rounded-2xl">
           <CardContent className="p-6">
             <h3 className="mb-5 text-lg font-semibold">
-              Atividades Recentes
+              Atualizações Recentes
             </h3>
 
             <div className="space-y-3">
-              {[
-                {
-                  icon: "🟢",
-                  title: "Novo paciente cadastrado",
-                  description: "João Silva foi registrado",
-                  time: "Agora",
-                },
-                {
-                  icon: "📅",
-                  title: "Consulta confirmada",
-                  description: "Maria Souza • Cardiologia",
-                  time: "12 min",
-                },
-                {
-                  icon: "💰",
-                  title: "Receita atualizada",
-                  description: "Fechamento financeiro diário",
-                  time: "35 min",
-                },
-                {
-                  icon: "📄",
-                  title: "Relatório exportado",
-                  description: "Indicadores de desempenho",
-                  time: "1 h",
-                },
-                {
-                  icon: "⚙️",
-                  title: "Configuração alterada",
-                  description: "Preferências do sistema",
-                  time: "Ontem",
-                },
-              ].map((item) => (
+              {updates.map((item) => (
                 <div
                   key={item.title}
                   className="flex items-start gap-4 rounded-xl border bg-background p-4 transition-all hover:shadow-sm"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-lg">
-                    {item.icon}
+                    ✅
                   </div>
 
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="font-medium">
-                        {item.title}
-                      </p>
+                      <p className="font-medium">{item.title}</p>
 
                       <span className="text-xs text-muted-foreground">
                         {item.time}

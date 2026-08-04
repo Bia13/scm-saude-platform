@@ -74,7 +74,11 @@ export default async function UsuariosPage() {
           </p>
         </div>
 
-        <Button className="h-11 rounded-xl px-5">
+        <Button
+          className="h-11 rounded-xl px-5"
+          disabled
+          title="Funcionalidade em breve"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Novo Usuário
         </Button>

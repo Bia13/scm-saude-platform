@@ -9,7 +9,7 @@ export const atendimentosMensais = [
 
 export const atendimentosMunicipios = [
   { municipio: "Goiânia", consultas: 940 },
-  { municipio: "Aparecida", consultas: 760 },
+  { municipio: "Aparecida de Goiânia", consultas: 760 },
   { municipio: "Rio Verde", consultas: 480 },
   { municipio: "Catalão", consultas: 340 },
   { municipio: "São Paulo", consultas: 210 },

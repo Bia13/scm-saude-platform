@@ -48,11 +48,13 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const titles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/municipios": "Municípios",
+  "/dashboard": "Centro de Decisão",
+  "/municipios": "Municípios Clientes",
   "/usuarios": "Usuários",
   "/indicadores": "Indicadores Globais",
-  "/resultados-indicadores": "Resultados dos Indicadores",
+  "/resultados": "Resultados dos Indicadores",
+  "/alertas": "Alertas",
+  "/missoes": "Missões",
 };
 
 type UserProfile = {

@@ -17,25 +17,38 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 export default function AlertasPage() {
+  const alertasAbertos = alertas.filter(
+    (item) => item.status !== "Resolvido"
+  ).length;
+  const alertasCriticos = alertas.filter(
+    (item) => item.prioridade === "Crítica"
+  ).length;
+  const alertasAndamento = alertas.filter(
+    (item) => item.status === "Em andamento"
+  ).length;
+  const alertasResolvidos = alertas.filter(
+    (item) => item.status === "Resolvido"
+  ).length;
+
   const cards = [
     {
       title: "Alertas Ativos",
-      value: "18",
+      value: alertasAbertos,
       icon: AlertTriangle,
     },
     {
       title: "Críticos",
-      value: "4",
+      value: alertasCriticos,
       icon: Siren,
     },
     {
       title: "Em andamento",
-      value: "9",
+      value: alertasAndamento,
       icon: Clock3,
     },
     {
       title: "Resolvidos",
-      value: "52",
+      value: alertasResolvidos,
       icon: CheckCircle2,
     },
   ];

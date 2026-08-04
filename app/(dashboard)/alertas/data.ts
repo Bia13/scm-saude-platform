@@ -13,7 +13,7 @@ export const alertas: Alerta[] = [
   {
     id: "ALT-002",
     titulo: "Fila de consultas elevada",
-    municipio: "Aparecida",
+    municipio: "Aparecida de Goiânia",
     categoria: "Consultas",
     prioridade: "Alta",
     status: "Em andamento",

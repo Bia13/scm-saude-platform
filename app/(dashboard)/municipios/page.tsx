@@ -16,20 +16,24 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { getMunicipios } from "@/lib/supabase/municipios";
+import { getUsuarios } from "@/lib/supabase/users";
+import { getMissoes } from "@/lib/supabase/missoes";
+import { alertas } from "@/app/(dashboard)/alertas/data";
 
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 
 export default async function MunicipiosPage() {
-  const municipios = await getMunicipios();
+  const [municipios, usuarios, missoes] = await Promise.all([
+    getMunicipios(),
+    getUsuarios(),
+    getMissoes(),
+  ]);
 
   const totalMunicipios = municipios.length;
-
-  // Enquanto ainda não existirem essas relações no banco,
-  // mantemos os mesmos valores que você já utilizava.
-  const totalUsuarios = 483;
-  const totalAlertas = 19;
-  const totalMissoes = 54;
+  const totalUsuarios = usuarios.length;
+  const totalAlertas = alertas.length;
+  const totalMissoes = missoes.length;
 
   const cards = [
     {
@@ -69,7 +73,11 @@ export default async function MunicipiosPage() {
           </p>
         </div>
 
-        <Button className="h-11 rounded-xl px-5">
+        <Button
+          className="h-11 rounded-xl px-5"
+          disabled
+          title="Funcionalidade em breve"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Novo Município
         </Button>

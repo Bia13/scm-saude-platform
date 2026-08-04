@@ -17,25 +17,39 @@ import { columns } from "./columns";
 import { resultadosIndicadores } from "./indicadores";
 
 export default function ResultadosIndicadoresPage() {
+  const totalIndicadores = resultadosIndicadores.length;
+  const desempenhoMedio = Math.round(
+    resultadosIndicadores.reduce(
+      (acc, item) => acc + (item.resultado / item.meta) * 100,
+      0
+    ) / totalIndicadores
+  );
+  const metasAtingidas = resultadosIndicadores.filter(
+    (item) => item.resultado >= item.meta
+  ).length;
+  const municipiosComIndicadores = new Set(
+    resultadosIndicadores.map((item) => item.municipio)
+  ).size;
+
   const cards = [
     {
       title: "Indicadores",
-      value: "24",
+      value: totalIndicadores,
       icon: Activity,
     },
     {
       title: "Desempenho Médio",
-      value: "91%",
+      value: `${desempenhoMedio}%`,
       icon: Target,
     },
     {
       title: "Metas Atingidas",
-      value: "18",
+      value: metasAtingidas,
       icon: Trophy,
     },
     {
       title: "Municípios",
-      value: "20",
+      value: municipiosComIndicadores,
       icon: Building2,
     },
   ];
